@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
-
 /**
  * Provides utility methods for reading, displaying, and manipulating
  * integer arrays.
@@ -39,37 +38,45 @@ public final class ArrayUtils {
      * displays an appropriate error message and returns {@code null}.</p>
      *
      * @return the populated integer array, or {@code null} if the input
-     *         is invalid or the specified array size is less than or equal
-     *         to zero
+     * is invalid or the specified array size is less than or equal
+     * to zero
      */
     public int[] read() {
-        System.out.print("Enter the number of elements in an array: ");
+        System.out.print("Enter the number of elements you want to store in an array: ");
+        int numberOfElements;
 
-        if (!scanner.hasNextInt()) {
-            System.out.println("Array size should be a valid number.");
-            return null;
-        }
-        final int numberOfElements = scanner.nextInt();
+        while (true) {
 
-        if (numberOfElements <= 0) {
-            System.out.println("Array should contain at least one element.");
-            return null;
+            if (scanner.hasNextInt()) {
+                numberOfElements = scanner.nextInt();
+
+                if (numberOfElements > 0) {
+                    break;
+                }
+                System.out.println("Array should contain at least one element.");
+            } else {
+                System.out.println("Array size should be a valid number.");
+                scanner.next(); // consume invalid input
+            }
+            System.out.print("Please re-enter the number of elements: ");
         }
         int[] data = new int[numberOfElements];
-        System.out.print("Enter the elements (each separated by a blank/tab/new-line): ");
+        System.out.print(
+                "Enter the elements (each separated by a blank/tab/new-line): "
+        );
 
         for (int i = 0; i < data.length; i++) {
 
-            if (!scanner.hasNextInt()) {
+            while (!scanner.hasNextInt()) {
                 System.out.println("Array element should be an integer.");
-                return null;
+                scanner.next(); // consume invalid input
+                System.out.print("Please re-enter element " + (i + 1) + ": ");
             }
             data[i] = scanner.nextInt();
         }
         System.out.println();
         return data;
     }
-
 
     /**
      * Prints the given integer array to standard output.
@@ -106,7 +113,6 @@ public final class ArrayUtils {
      */
     public static void reverse(int[] data) {
         Objects.requireNonNull(data, "data must not be null");
-
         int left = 0;
         int right = data.length - 1;
 
