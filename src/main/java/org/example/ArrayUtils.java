@@ -7,9 +7,8 @@ import java.util.Scanner;
 /**
  * Provides utility methods for reading, displaying, and manipulating
  * integer arrays.
- *
- * <p>The {@code read()} method reads the array size and elements from
- * standard input and returns the populated array.</p>
+ * <p>The {@code read()} method reads the array size and elements using
+ * the configured {@link Scanner} and returns the populated array.</p>
  *
  * @author Dinesh Bhagwat
  * @version 1.0
@@ -26,20 +25,19 @@ public final class ArrayUtils {
         this.scanner = Objects.requireNonNull(scanner, "scanner must not be null");
     }
 
+
     /**
-     * Reads an integer array from standard input.
+     * Reads an integer array using the configured scanner.
      *
      * <p>The user is prompted to enter the number of elements followed by
      * the integer elements of the array. Each input value is validated
      * before it is stored in the array.</p>
      *
-     * <p>If the array size is not a valid integer, is less than or equal
-     * to zero, or if any array element is not a valid integer, the method
-     * displays an appropriate error message and returns {@code null}.</p>
+     * <p>If the user enters invalid input, the method displays an
+     * appropriate error message and prompts the user to enter the
+     * value again.</p>
      *
-     * @return the populated integer array, or {@code null} if the input
-     * is invalid or the specified array size is less than or equal
-     * to zero
+     * @return the populated integer array
      */
     public int[] read() {
         System.out.print("Enter the number of elements you want to store in an array: ");
@@ -58,7 +56,7 @@ public final class ArrayUtils {
                 System.out.println("Array size should be a valid number.");
                 scanner.next(); // consume invalid input
             }
-            System.out.print("Please re-enter the number of elements: ");
+            System.out.print("Please enter a valid number of elements: ");
         }
         int[] data = new int[numberOfElements];
         System.out.print(
