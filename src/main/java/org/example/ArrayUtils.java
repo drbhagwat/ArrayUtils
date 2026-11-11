@@ -24,7 +24,7 @@ public final class ArrayUtils {
   /**
    * Reads an integer from the user input.
    *
-   * @param prompt - the prompt to display to the user
+   * @param prompt - the prompt gets displayed to the user
    * @return the integer entered by the user
    */
   private int readInteger(String prompt) {
@@ -41,9 +41,8 @@ public final class ArrayUtils {
       if (scanner.hasNextInt()) {
         return scanner.nextInt();
       }
-      System.out.println("Please enter a valid integer.");
+      System.out.print("Please enter a positive number: ");
       scanner.next();
-      System.out.print(prompt);
     }
   }
 
@@ -56,15 +55,12 @@ public final class ArrayUtils {
     int numberOfElements;
 
     while (true) {
-      numberOfElements = readInteger(
-          "Enter the number of elements: "
-      );
+      numberOfElements = readInteger("Enter the number of elements: ");
 
       if (numberOfElements > 0 &&
           numberOfElements <= MAX_ARRAY_SIZE) {
         break;
       }
-
       System.out.println(
           "Array size must be between 1 and "
               + MAX_ARRAY_SIZE + "."
