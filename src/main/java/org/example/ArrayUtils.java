@@ -6,13 +6,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- * Provides utility methods for reading, displaying, and manipulating
- * integer arrays.
- * <p>The {@code read()} method reads the array size and elements using
- * the configured {@link Scanner} and returns the populated array.</p>
- *
- * @author Dinesh Bhagwat
- * @version 1.0
+ * Utility class for reading, displaying, and manipulating integer arrays.
  */
 public final class ArrayUtils {
   private final Scanner scanner;
@@ -27,6 +21,12 @@ public final class ArrayUtils {
     this.scanner = Objects.requireNonNull(scanner, "scanner must not be null");
   }
 
+  /**
+   * Reads an integer from the user input.
+   *
+   * @param prompt - the prompt to display to the user
+   * @return the integer entered by the user
+   */
   private int readInteger(String prompt) {
     System.out.print(prompt);
 
@@ -47,11 +47,15 @@ public final class ArrayUtils {
     }
   }
 
+  /**
+   * Reads an integer array from the user input.
+   *
+   * @return the integer array entered by the user
+   */
   public int[] read() {
     int numberOfElements;
 
     while (true) {
-
       numberOfElements = readInteger(
           "Enter the number of elements: "
       );
