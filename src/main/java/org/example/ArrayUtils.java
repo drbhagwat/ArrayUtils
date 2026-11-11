@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ import java.util.Scanner;
  */
 public final class ArrayUtils {
   private final Scanner scanner;
+  private static final int MAX_ARRAY_SIZE = 1_000_000;
 
   /**
    * Creates an {@code ArrayUtils} instance using the specified scanner.
@@ -25,53 +27,55 @@ public final class ArrayUtils {
     this.scanner = Objects.requireNonNull(scanner, "scanner must not be null");
   }
 
-  /**
-   * Reads an integer array using the configured scanner.
-   *
-   * <p>The user is prompted to enter the number of elements followed by
-   * the integer elements of the array. Each input value is validated
-   * before it is stored in the array.</p>
-   *
-   * <p>If the user enters invalid input, the method displays an
-   * appropriate error message and prompts the user to enter the
-   * value again.</p>
-   *
-   * @return the populated integer array
-   */
+  private int readInteger(String prompt) {
+    System.out.print(prompt);
+
+    while (true) {
+
+      if (!scanner.hasNext()) {
+        throw new NoSuchElementException(
+            "Input ended unexpectedly."
+        );
+      }
+
+      if (scanner.hasNextInt()) {
+        return scanner.nextInt();
+      }
+      System.out.println("Please enter a valid integer.");
+      scanner.next();
+      System.out.print(prompt);
+    }
+  }
+
   public int[] read() {
-    System.out.print("Enter the number of elements you want to store in an array: ");
     int numberOfElements;
 
     while (true) {
 
-      if (scanner.hasNextInt()) {
-        numberOfElements = scanner.nextInt();
+      numberOfElements = readInteger(
+          "Enter the number of elements: "
+      );
 
-        if (numberOfElements > 0) {
-          break;
-        }
-        System.out.println("Array should contain at least one element.");
-      } else {
-        System.out.println("Array size should be a valid number.");
-        scanner.next(); // consume invalid input
+      if (numberOfElements > 0 &&
+          numberOfElements <= MAX_ARRAY_SIZE) {
+        break;
       }
-      System.out.print("Please enter a valid number of elements: ");
+
+      System.out.println(
+          "Array size must be between 1 and "
+              + MAX_ARRAY_SIZE + "."
+      );
     }
+
     int[] data = new int[numberOfElements];
-    System.out.print(
-        "Enter the elements (each separated by a blank/tab/new-line): "
-    );
 
     for (int i = 0; i < data.length; i++) {
 
-      while (!scanner.hasNextInt()) {
-        System.out.println("Array element should be an integer.");
-        scanner.next(); // consume invalid input
-        System.out.print("Please re-enter element " + (i + 1) + ": ");
-      }
-      data[i] = scanner.nextInt();
+      data[i] = readInteger(
+          "Enter element " + (i + 1) + ": "
+      );
     }
-    System.out.println();
+    System.out.println("Array successfully populated.");
     return data;
   }
 
